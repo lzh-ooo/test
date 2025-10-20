@@ -1,0 +1,27 @@
+系统要求：windows 10或者以上系统，GPU，支持cuda11.8
+
+一：准备图片数据集
+1.安卓使用takeScreenshot 函数截图。
+2.windows使用saveScreenshot截图。
+3.如果是视频可以使用windowsBot.extractImageByVideo 提取图片
+
+二：创建相关文件夹
+1.在datasets文件夹下创建一个文件夹。例：game
+2.在game文件夹下创建images和labels文件夹
+3.在images文件夹下创建train和val两个文件夹，分别存放训练集和验证集
+4.把提取出的图片分别放入train和val，任意比例都可，一般为 8:2  或 9:1
+
+三：使用labelImg.exe 标注训练集图片
+1.运行labelimg.exe
+2.点击"打开目录"选择datasets/game/images/train
+3.点击"创建区块"，在图片上标记，并填写类名
+4.点击"改变存放目录"，选择datasets/game/labels/train
+5.点击保存按钮下面的存储格式，切换为yolo，点击保存按钮，生成txt格式才是正确
+6.重复标记所有图片
+
+四：使用labelImg.exe 标注验证集图片
+1.打开目录选择datasets/game/images/val
+2.点击创建区块，在图片上标记，并填写类名
+3.点击改变存放目录，选择datasets/game/labels/val
+4.点击保存按钮下面的存储格式，切换为yolo，点击保存按钮，生成txt格式才是正确
+5.重复标记所有图片
