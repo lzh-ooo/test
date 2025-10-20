@@ -1,0 +1,99 @@
+# MateConv 预训练配置文件
+
+# 数据配置
+data:
+  tokenizer_path: "/root/autodl-tmp/MateGenConv/model/mateconv_tokenizer"
+  train_data_path: "./dataset/pretrain_data.bin"
+  val_data_path: null
+  max_seq_len: 512
+  max_text_length: 512
+
+# 模型配置
+model:
+  dim: 512
+  n_layers: 8
+  n_heads: 16
+  vocab_size: 6400
+  max_seq_len: 512
+  dropout: 0.1
+  use_moe: false
+  use_flash_attention: false
+
+# 训练配置
+training:
+  # 基础参数
+  epochs: 15
+  batch_size: 32
+  eval_batch_size: 64
+  accumulation_steps: 1
+  num_workers: 4
+  
+  # 优化器
+  optimizer_type: "adamw"  # adamw, adam, lion, adafactor
+  learning_rate: 3.0e-4
+  min_lr: 3.0e-5
+  weight_decay: 0.1
+  beta1: 0.9
+  beta2: 0.95
+  
+  # 学习率调度
+  lr_scheduler: "cosine"  # cosine, linear, polynomial
+  warmup_ratio: 0.1
+  warmup_iters: 2000
+  
+  # 正则化
+  grad_clip: 1.0
+  dropout: 0.1
+  
+  # 混合精度
+  dtype: "bfloat16"  # float32, float16, bfloat16
+  
+  # EMA
+  use_ema: true
+  ema_decay: 0.9999
+  
+  # 验证和保存
+  eval_interval: 500
+  eval_iters: 100
+  save_interval: 1000
+  log_interval: 10
+  
+  # 早停
+  early_stopping: true
+  patience: 5
+  
+  # 输出
+  out_dir: "out"
+  save_total_limit: 5
+
+# 生成配置
+generation:
+  do_sample: true
+  temperature: 0.8
+  top_k: 50
+  top_p: 0.9
+  repetition_penalty: 1.2
+  length_penalty: 1.0
+  no_repeat_ngram_size: 3
+  max_new_tokens: 100
+  min_new_tokens: 1
+  use_cache: true
+
+# 分布式训练
+distributed:
+  enable: false
+  backend: "nccl"
+  world_size: 2
+
+# Wandb
+wandb:
+  enable: false
+  project: "MateConv-Pretrain"
+  entity: null
+  run_name: null
+  tags: ["pretrain", "mateconv"]
+
+# 其他
+seed: 1337
+deterministic: false
+
